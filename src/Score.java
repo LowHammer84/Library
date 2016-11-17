@@ -1,22 +1,34 @@
-public class Score {
+import java.io.Serializable;
+import java.util.ArrayList;
 
-    private final static String[] instrumentsList = {"Flute", "Clarinet-1", "Clarinet-2", "Clarinet-3", "Alto Sax", "Tenor Sax",
-                                               "Baritone", "Horn-1", "Horn-2", "Horn-3", "Tenor-2", "Tuba-1", "Tuba-2",
-                                               "Bass-guitar", "Drums", "Cornet-1", "Cornet-2", "Trumpet-1", "Trumpet-2", "Trombone-1", "Trombone-2"};
+public class Score implements Serializable{
+
+//    private final static String[] instrumentsList = {"Flute", "Clarinet-1", "Clarinet-2", "Clarinet-3", "Alto Sax", "Tenor Sax",
+//            "Baritone", "Horn-1", "Horn-2", "Horn-3", "Tenor-2", "Tuba-1", "Tuba-2",
+//            "Bass-guitar", "Drums", "Cornet-1", "Cornet-2", "Trumpet-1", "Trumpet-2", "Trombone-1", "Trombone-2"};
 
 
+    private static int count;
     private int     id;
     private String  genre;
     private String  title;
     private String  author;
     private boolean isInLibrary;
 
+    public Score(String title, String author, String genre, boolean isInLibrary){
+        count++;
+        this.id = count;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.isInLibrary = isInLibrary;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
-
         this.id = id;
     }
 
@@ -54,10 +66,7 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Score{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                '}';
+        return title + " " + author + " " + genre;
     }
+
 }
