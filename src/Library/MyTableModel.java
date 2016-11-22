@@ -74,6 +74,8 @@ public class MyTableModel extends AbstractTableModel{
 
     public void removeRow(int row) {
 
+        if (data.length == 1) return;
+
         Object[][] temp = new Object[data.length-1][5];
 
         if (row == data.length - 1) {

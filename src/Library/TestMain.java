@@ -29,16 +29,16 @@ public class TestMain {
 
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(1050,768);
+        frame.setSize(1200,768);
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setLayout(null);
 
         MyTableModel myTableModel = new MyTableModel(database.getData());
         JTable table = new JTable(myTableModel);
-        //table.addMouseListener();
         myTableModel.setUpGenreColumn(table, table.getColumnModel().getColumn(2));
         table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         table.setFillsViewportHeight(true);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setLocation(10,10);
