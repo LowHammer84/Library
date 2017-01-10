@@ -1,4 +1,6 @@
-package Library;
+package gui;
+
+import database.Database;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -8,19 +10,17 @@ import javax.swing.table.TableColumn;
 
 public class MyTableModel extends AbstractTableModel{
 
-    String[] columnNames = {"Название", "Автор", "Жанр", "№", "В библиотеке"};
+    private String[] columnNames = {"Название", "Автор", "Жанр", "№", "В библиотеке"};
 
-    Object[][] data;
+    Database database = Database.getData();
 
-    public MyTableModel(Object[][] data){
-        this.data = data;
-
+    public MyTableModel(){
 
     }
 
     @Override
     public int getRowCount() {
-        return data.length;
+        return database.getScores().size();
     }
 
     @Override
@@ -34,6 +34,12 @@ public class MyTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+
+                return database.getScore
+        }
+
         return data[rowIndex][columnIndex];
     }
 

@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 class Score implements Serializable {
 
-    private String id;
+
     private enum Genre {Марш, Вальс, Джаз, Эстрада, Другое}
-    private Genre genre = Genre.Другое;
+    private Genre   genre = Genre.Другое;
+    private String  id;
     private String  title;
     private String  author;
     private boolean isInLibrary;
@@ -16,6 +17,10 @@ class Score implements Serializable {
         this.author = author;
         this.genre = Genre.valueOf(genre);
         this.isInLibrary = isInLibrary;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     @Override

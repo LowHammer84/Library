@@ -1,4 +1,5 @@
-package Library;
+import database.Database;
+import gui.MyTableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-        database = new Database();
+        //database = new Database();
 
         create("Score Library");
     }
@@ -33,8 +34,8 @@ public class TestMain {
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setLayout(null);
 
-        MyTableModel myTableModel = new MyTableModel(database.getData());
-        JTable table = new JTable(myTableModel);
+        MyTableModel myTableModel = new MyTableModel();
+        JTable       table        = new JTable(myTableModel);
         myTableModel.setUpGenreColumn(table, table.getColumnModel().getColumn(2));
         table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         table.setFillsViewportHeight(true);
@@ -66,7 +67,7 @@ public class TestMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Database.saveToFile(myTableModel.data);
+                    //Database.saveToFile(myTableModel.data);
                     saveButton.setEnabled(false);
                 } catch (IOException e1) {
                     e1.printStackTrace();

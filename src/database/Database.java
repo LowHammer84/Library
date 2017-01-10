@@ -1,50 +1,93 @@
 package database;
 
+
 import java.io.*;
+import java.util.ArrayList;
 
 public class Database {
 
-    private static final File scoresFile = new File("scores.save");
-    static private Object[][] data;
-    Object[][] defaultData = {{"Название", "Автор", "Жанр", 1, true},{"","","",2,false}, {"", "", "",3,false}};
-
-    public Database(){
-        if (!readFromFile())
-            data = getData();
+    private static Database database;
+    private File dataFile = new File("scores.save" );
+    private ArrayList<Score> scores;
+    private Database() {
+        initialize();
     }
 
-    static void saveToFile(Object[][] data) throws IOException {
-        if (!scoresFile.exists()) scoresFile.createNewFile();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(scoresFile));
-        objectOutputStream.writeObject(data);
-        objectOutputStream.close();
-    }
-
-    static boolean readFromFile() {
-        if (scoresFile.exists()) {
-            try {
-                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(scoresFile));
-                data = (Object[][]) objectInputStream.readObject();
-                objectInputStream.close();
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                return false;
-            }
+    public static Database getData() {
+        if (database == null) {
+            database = new Database();
         }
-        return false;
+        return database;
     }
 
-    public void addScore(String title, String author, String genre, boolean isInLibrary) {
-       // scores.add(new Score(title, author, genre, isInLibrary));
+    private void initialize(){
+
+        if (dataFile.exists()) {
+            readDataFromFile();
+        } else {
+            System.out.println("Файл базы данных не найден - будет создан новый файл по умолчанию");
+            scores = new ArrayList<>();
+            scores.add(new Score("title", "author", "Другое", false));
+            saveToFile();
+        }
     }
 
-    public Object[][] getData() {
-        if (data != null) {
-            return data;
-        } else return defaultData;
+    public void printScores(){
+        for (Score s:
+                scores) {
+            System.out.println(s);
+        }
     }
+
+    public ArrayList<Score> getScores() {
+        return scores;
+    }
+
+    public String getScoreTitle(int rowIndex, int columnIndex) {
+
+        switch (columnIndex) {
+            case 0:
+                return scores.get(rowIndex).getTitle();
+        }
+    }
+
+    private boolean readDataFromFile() {
+
+        if (!dataFile.exists()) {
+            System.out.println("Ошибка: файл не найден!");
+            return false;
+        }
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(dataFile));
+            scores = (ArrayList<Score>) objectInputStream.readObject();
+            objectInputStream.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Ошибка: файл " + dataFile + " не найден");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Ошибка ввода - вывода");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Ошибка - не верный формат файла");
+        }
+        return true;
+    }
+
+    private void saveToFile() {
+
+        if (!dataFile.exists()) try {
+            dataFile.createNewFile();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(dataFile));
+            objectOutputStream.writeObject(scores);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Ошибка записи в файл");
+        }
+    }
+
+
+
 }
