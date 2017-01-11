@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class TestMain {
     private static boolean created = false;
@@ -33,10 +32,10 @@ public class TestMain {
         frame.setSize(1200,768);
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setLayout(null);
-
+    
         MyTableModel myTableModel = new MyTableModel();
-        JTable       table        = new JTable(myTableModel);
-        myTableModel.setUpGenreColumn(table, table.getColumnModel().getColumn(2));
+        JTable table = new JTable(myTableModel);
+        myTableModel.setUpGenreColumn(table, table.getColumnModel().getColumn(3));
         table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         table.setFillsViewportHeight(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -66,12 +65,12 @@ public class TestMain {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
+                //try {
                     //Database.saveToFile(myTableModel.data);
                     saveButton.setEnabled(false);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                //} catch (IOException e1) {
+                //    e1.printStackTrace();
+                //}
             }
         });
 

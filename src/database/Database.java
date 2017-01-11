@@ -5,6 +5,12 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Database {
+    
+    private static final int ID = 0;
+    private static final int TITLE = 1;
+    private static final int AUTHOR = 2;
+    private static final int GENRE = 3;
+    private static final int INLIBRARY = 4;
 
     private static Database database;
     private File dataFile = new File("scores.save" );
@@ -42,12 +48,51 @@ public class Database {
     public ArrayList<Score> getScores() {
         return scores;
     }
-
-    public String getScoreTitle(int rowIndex, int columnIndex) {
-
+    
+    public Score getScore(int index) {
+        return scores.get(index);
+    }
+    
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        
+        Score score = getScore(rowIndex);
+        
         switch (columnIndex) {
-            case 0:
-                return scores.get(rowIndex).getTitle();
+            case ID:
+                return score.getId();
+            case TITLE:
+                return score.getTitle();
+            case AUTHOR:
+                return score.getAuthor();
+            case GENRE:
+                return score.getGenre();
+            case INLIBRARY:
+                return score.isInLibrary();
+        }
+        return null;
+    }
+    
+    public void setValueAt(Object value, int row, int col) {
+        
+        Score score = getScore(row);
+    
+        switch (col) {
+            
+            case ID:
+                score.setId((Integer) value);
+                break;
+            case TITLE:
+                score.setTitle((String) value);
+                break;
+            case AUTHOR:
+                score.setAuthor((String) value);
+                break;
+            case GENRE:
+                score.setGenre((Score.Genre.valueOf(value.toString())));
+                break;
+            case INLIBRARY:
+                score.setInLibrary((Boolean.parseBoolean(value.toString())));
+                break;
         }
     }
 

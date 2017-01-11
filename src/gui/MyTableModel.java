@@ -1,16 +1,15 @@
 package gui;
 
-import database.Database;
+import database.*;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-
 public class MyTableModel extends AbstractTableModel{
 
-    private String[] columnNames = {"Название", "Автор", "Жанр", "№", "В библиотеке"};
+    private String[] columnNames = {"№", "Название", "Автор", "Жанр", "В библиотеке"};
 
     Database database = Database.getData();
 
@@ -34,13 +33,7 @@ public class MyTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-
-                return database.getScore
-        }
-
-        return data[rowIndex][columnIndex];
+        return database.getValueAt(rowIndex, columnIndex);
     }
 
     public Class getColumnClass(int c) {
@@ -53,87 +46,31 @@ public class MyTableModel extends AbstractTableModel{
 
     public void setValueAt(Object value, int row, int col) {
 
-        if (col == 3) {
-            data[row][col] = calcId((int)value);
-        } else {
-            data[row][col] = value;
-        }
+        database.setValueAt(value, row, col);
+        
         fireTableCellUpdated(row, col);
     }
 
     public void addRow(){
-
-        Object[] defaultRaw = {"","","",calcId(),false};
-
-        if ((data[data.length-1].equals(defaultRaw)) || (data[data.length-1][0].equals("") )&&(data[data.length-1][1].equals("")))
-            return;
-
-        Object[][] temp = new Object[data.length+1][columnNames.length];
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < columnNames.length; j++) {
-                temp[i][j] = data[i][j];
-            }
-        }
-        temp[data.length] = defaultRaw;
-        data = temp;
+        
     }
 
     public void removeRow(int row) {
-
-        if (data.length == 1) return;
-
-        Object[][] temp = new Object[data.length-1][5];
-
-        if (row == data.length - 1) {
-            for (int i = 0; i < data.length - 1; i++) {
-                for (int j = 0; j < 5; j++) {
-                    temp[i][j] = data[i][j];
-                }
-            }
-            data = temp;
-        } else {
-            for (int i = 0; i < row; i++) {
-                for (int j = 0; j < 5; j++){
-                    temp[i][j] = data[i][j];
-                }
-            }
-
-            for (int i = row; i < data.length -1; i++){
-                for (int j = 0; j < 5; j++) {
-                    temp[i][j] = data[i+1][j];
-                }
-            }
-            data = temp;
-    }
-
-
-        data = temp;
+        
     }
 
     public int calcId(){
-        int x = 1;
-        boolean flag = false;
-            for (int i = 0; i < data.length; i++) {
-                if (x == (int)data[i][3]) {
-                    i = 0;
-                    x++;
-                }
-            }return x;
+        return 0;
     }
 
     public int calcId(int a){
-        for (int i = 0; i < data.length; i++) {
-            if (a == (int)data[i][3]) {
-                return calcId();
-            }
-        }
-        return a;
+        return 0;
     }
 
     @Override
     public void fireTableCellUpdated(int row, int column) {
         super.fireTableCellUpdated(row, column);
-        TestMain.saveButton.setEnabled(true);
+        //TestMain.saveButton.setEnabled(true);
 
     }
 
@@ -142,12 +79,11 @@ public class MyTableModel extends AbstractTableModel{
         JComboBox comboBox = new JComboBox();
         comboBox.addItem("Марш");
         comboBox.addItem("Вальс");
-        comboBox.addItem("Этрада");
+        comboBox.addItem("Эcтрада");
         comboBox.addItem("Попурри");
         comboBox.addItem("Классика");
         comboBox.addItem("Другое");
-        sportColumn.setCellEditor(new DefaultCellEditor(comboBox));
-
+        table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboBox));
         //Set up tool tips for the sport cells.
         DefaultTableCellRenderer renderer =
                 new DefaultTableCellRenderer();
