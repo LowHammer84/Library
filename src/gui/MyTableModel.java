@@ -50,22 +50,7 @@ public class MyTableModel extends AbstractTableModel{
         database.setValueAt(value, row, col);
         
         fireTableCellUpdated(row, col);
-    }
-
-    public void addRow(){
-        
-    }
-
-    public void removeRow(int row) {
-        
-    }
-
-    public int calcId(){
-        return 0;
-    }
-
-    public int calcId(int a){
-        return 0;
+       
     }
 
     @Override
@@ -95,4 +80,5 @@ public class MyTableModel extends AbstractTableModel{
     public void fireTableChanged(TableModelEvent e) {
         super.fireTableChanged(e);
     }
+    
 }

@@ -51,22 +51,16 @@ public class Window extends JFrame
         switch (buttonCommand) {
             case "Сохранить":
                 database.save();
-                repaint();
                 break;
             case "Добавить":
                 database.add();
-                table.repaint();
-                repaint();
                 break;
             case "Удалить":
                 int rowIndex = table.getSelectedRow();
                 database.remove(rowIndex);
-                table.repaint();
-                repaint();
                 break;
         }
-        table.repaint();
-        this.repaint();
+        myTableModel.fireTableDataChanged();
     }
     
     // creates button panel

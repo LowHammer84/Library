@@ -15,6 +15,7 @@ public class Database {
     private static Database database;
     private File dataFile = new File("scores.save" );
     private ArrayList<Score> scores;
+    
     private Database() {
         initialize();
     }
@@ -140,6 +141,10 @@ public class Database {
             System.out.println("Ошибка записи в файл");
         }
     }
+    
+    
+    
+    
 
 
 
