@@ -131,21 +131,24 @@ public class Database {
 
     private void saveToFile() {
 
-        if (!dataFile.exists()) try {
-            dataFile.createNewFile();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(dataFile));
-            objectOutputStream.writeObject(scores);
-            objectOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Ошибка записи в файл");
+        if (!dataFile.exists()) {
+    
+            try {
+                dataFile.createNewFile();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            try {
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(dataFile));
+                objectOutputStream.writeObject(scores);
+                objectOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Ошибка записи в файл");
+            }
         }
     }
     
-    
-    
-    
-
-
 
 }

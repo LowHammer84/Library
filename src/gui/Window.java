@@ -34,6 +34,7 @@ public class Window extends JFrame
         myTableModel.setUpGenreColumn(table, table.getColumnModel().getColumn(3));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(table);
+        setUpRowsSize();
         this.getContentPane().add(scrollPane);
         
         JPanel buttonPanel = createButtonsPanel();
@@ -77,6 +78,14 @@ public class Window extends JFrame
         removeButton.addActionListener(this);
         buttonPanel.add(removeButton);
         return buttonPanel;
+    }
+    
+    public void setUpRowsSize(){
+        for (int i = 0; i < database.getScoresSize(); i++) {
+            table.getColumnModel().getColumn(0).setMaxWidth(50);
+            table.getColumnModel().getColumn(4).setWidth(200);
+            table.setRowHeight(25);
+        }
     }
     
     
