@@ -25,6 +25,18 @@ public class Database {
         }
         return database;
     }
+    
+    public int getScoresSize(){
+        return scores.size();
+    }
+    
+    public void add(){
+        scores.add(new Score("", "", "Другое", false));
+    }
+    
+    public void remove(int index) {
+        scores.remove(index);
+    }
 
     private void initialize(){
 
@@ -44,18 +56,10 @@ public class Database {
             System.out.println(s);
         }
     }
-
-    public ArrayList<Score> getScores() {
-        return scores;
-    }
-    
-    public Score getScore(int index) {
-        return scores.get(index);
-    }
-    
+   
     public Object getValueAt(int rowIndex, int columnIndex) {
         
-        Score score = getScore(rowIndex);
+        Score score = scores.get(rowIndex);
         
         switch (columnIndex) {
             case ID:
@@ -74,7 +78,7 @@ public class Database {
     
     public void setValueAt(Object value, int row, int col) {
         
-        Score score = getScore(row);
+        Score score = scores.get(row);
     
         switch (col) {
             
@@ -94,6 +98,10 @@ public class Database {
                 score.setInLibrary((Boolean.parseBoolean(value.toString())));
                 break;
         }
+    }
+    
+    public void save(){
+        saveToFile();
     }
 
     private boolean readDataFromFile() {

@@ -3,6 +3,7 @@ package gui;
 import database.*;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -11,15 +12,15 @@ public class MyTableModel extends AbstractTableModel{
 
     private String[] columnNames = {"№", "Название", "Автор", "Жанр", "В библиотеке"};
 
-    Database database = Database.getData();
+    Database database;
 
-    public MyTableModel(){
-
+    public MyTableModel(Database database){
+        this.database = database;
     }
 
     @Override
     public int getRowCount() {
-        return database.getScores().size();
+        return database.getScoresSize();
     }
 
     @Override
@@ -70,8 +71,7 @@ public class MyTableModel extends AbstractTableModel{
     @Override
     public void fireTableCellUpdated(int row, int column) {
         super.fireTableCellUpdated(row, column);
-        //TestMain.saveButton.setEnabled(true);
-
+        
     }
 
     public void setUpGenreColumn(JTable table, TableColumn sportColumn) {
@@ -89,5 +89,10 @@ public class MyTableModel extends AbstractTableModel{
                 new DefaultTableCellRenderer();
         renderer.setToolTipText("Нажмите для выбора");
         sportColumn.setCellRenderer(renderer);
+    }
+    
+    @Override
+    public void fireTableChanged(TableModelEvent e) {
+        super.fireTableChanged(e);
     }
 }
